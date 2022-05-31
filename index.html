@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CP Contests Calender</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" 
+  integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" 
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="loader">
+    <h1>
+    <span class="let1">l</span>  
+    <span class="let2">o</span>  
+    <span class="let3">a</span>  
+    <span class="let4">d</span>  
+    <span class="let5">i</span>  
+    <span class="let6">n</span>  
+    <span class="let7">g</span>  
+  </h1>
+  </div>
+ 
+
+<div class="mainDIV hidden"> 
+    <h3>CP Contests Calender</h3>
+    <div class="lastoption hidden"></div>
+    <div class="Options">
+        <div class="btnOpt" id="btnAlarm">
+             <i class="fa-solid fa-bell"></i>  Notify me 
+        </div>
+        <div class="btnOpt okactive" id="btnHome">
+            <i class="fa-solid fa-calendar"></i>  Home
+        </div>
+        <div class="btnOpt" id="btnSetting">
+           <i class="fa-solid fa-sliders"></i>  Plateforms
+        </div>
+    </div>
+
+    <div class="MainCon">
+
+      <div class="equaldiv hidden" id="Alarm">
+            <h4>Contest Starts In</h4>
+            <div class="alarmCon">
+               
+            </div>
+      </div>
+
+
+
+      <div class="equaldiv " id="Home">
+            <div class="optTool">
+              <div class="btnOpt" id="today">
+                <i class="fa-solid fa-calendar-day"></i> Today
+              </div>
+              <div class="btnOpt okactive" id="upcoming">
+                <i class="fa-solid fa-calendar-week"></i> Upcoming
+              </div>
+              <div class="fil">
+                <label for="Filter">Filter</label>
+                <br>
+                  <select name="Filter" id="filter">
+                    <option value="dur3">Duration (&lt= 3hrs)</option>
+                    <option value="dur24" selected>Duration (&lt= 1day)</option>
+                    <option value="durg24">Duration (&gt= 1day)</option>
+                  </select>
+              </div>
+            </div>
+
+            <div class="tableCon">
+               
+            </div>
+      </div>
+
+
+
+      <div class="equaldiv hidden" id="Setting">
+           <h4>Choose Plateforms</h4>
+            <div class="eqplate">
+              <div class="logo">
+                <img src="images/codeforces.png" alt="codeforces" >
+                <span>Codeforces</span>
+              </div>
+              <div class="tick">
+                <input type="checkbox" name="codeforces.com" id="host1" >
+              </div>
+            </div>
+
+            <div class="eqplate">
+              <div class="logo">
+                <img src="images/codechef.png" alt="codechef" >
+                <span>Codechef</span>
+              </div>
+              <div class="tick">
+                <input type="checkbox" name="codechef.com" id="host2" >
+              </div>
+            </div>
+
+            <div class="eqplate">
+              <div class="logo">
+                <img src="images/atcoder.png" alt="atcoder" >
+                <span>Atcoder</span>
+              </div>
+              <div class="tick">
+                <input type="checkbox" name="atcoder.jp" id="host3" >
+              </div>
+            </div>
+
+            <div class="eqplate">
+              <div class="logo">
+                <img src="images/leetcode.png" alt="leetcode" >
+                <span>Leetcode</span>
+              </div>
+              <div class="tick">
+                <input type="checkbox" name="leetcode.com" id="host4" >
+              </div>
+            </div>
+
+            <div class="eqplate">
+              <div class="logo">
+                <img src="images/google.png" alt="google" >
+                <span>Google</span>
+              </div>
+              <div class="tick">
+                <input type="checkbox" name="codingcompetitions.withgoogle.com" id="host5" >
+              </div>
+            </div>
+
+            <div class="eqplate">
+              <div class="logo">
+                <img src="images/HackerEarth.png" alt="hackerearth" >
+                <span>HackerEarth</span>
+              </div>
+              <div class="tick">
+                <input type="checkbox" name="hackerearth.com" id="host6" >
+              </div>
+            </div>
+
+            <div class="eqplate">
+              <div class="logo">
+                <img src="images/GeeksforGeeks.png" alt="gfg" >
+                <span>GeeksforGeeks</span>
+              </div>
+              <div class="tick">
+                <input type="checkbox" name="geeksforgeeks.org" id="host7" >
+              </div>
+            </div>
+
+            <div class="eqplate">
+              <div class="logo">
+                <img src="images/topcoder.png" alt="Topcoder" >
+                <span>Topcoder</span>
+              </div>
+              <div class="tick">
+                <input type="checkbox" name="topcoder.com" id="host8" >
+              </div>
+            </div>
+
+
+      </div>
+
+    </div>
+  </div>
+   <script src="js/script.js"></script>
+   <!-- <script src="js/custom.js"></script> -->
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "CP Contest Calendar",
+  "description": "This extension shows detail related to upcoming CP contests.",
+  "version": "1.0.1",
+  "manifest_version": 3,
+  "permissions": ["alarms", "notifications"],
+  "icons": {
+    "128": "logo/128.png",
+    "96": "logo/96.png",
+    "48": "logo/48.png",
+    "16": "logo/16.png"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "images/logo1.png"
+   },
+  "background": {
+  "service_worker": "js/background.js"
+  },
+  "commands": {
+  "_execute_action": {
+    "suggested_key": {
+      "default": "Ctrl+Shift+1",
+      "mac": "Command+Shift+1"
+      }
+    }
+  }
+}
