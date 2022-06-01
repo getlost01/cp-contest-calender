@@ -9,7 +9,8 @@
     "96": "logo/96.png",
     "48": "logo/48.png",
     "16": "logo/16.png"
-  },
+  },    
+  "homepage_url": "https://github.com/getlost01/cp-contest-calender",
   "action": {
     "default_popup": "index.html",
     "default_icon": "images/logo1.png"

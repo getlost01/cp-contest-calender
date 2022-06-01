@@ -43,11 +43,12 @@
  }
  .Options .btnOpt:hover{
   box-shadow: 0 0 3px var(--bordercolor);
+  border-color: var(--bgcolor);
  }
  .Options .okactive{
   background-color: #ffeee3;
   color: #303443;
-  border-color: black;
+  border-color: var(--bgcolor);
 }
  .Options .fa-solid{
      position: relative;

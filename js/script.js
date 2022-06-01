@@ -40,7 +40,7 @@ fil.addEventListener('change',()=>{
 window.addEventListener("load",function(){
     setTimeout(()=>{document.querySelector(".loader").style.display="none"; 
 	document.querySelector(".mainDIV").classList.remove("hidden"); 
-   },5000);
+   },3000);
 })
 
 btnAlarm.addEventListener('click',()=>{
@@ -362,6 +362,8 @@ function fetchAlarm(){
 	alarmArray1.forEach((id)=>{
 	document.querySelector(`#del${id}`).addEventListener('click',()=>{
 		var tempData = JSON.parse(localStorage.getItem("alarms"));
+		chrome.alarms.clear(iddata.get(id)[1]);
+		chrome.alarms.getAll((e)=>{console.log(e)});
 	    tempData = tempData.filter((e)=>{
 			return e!=id;
 		})
@@ -374,6 +376,7 @@ function fetchAlarm(){
 	alarmArray1 = JSON.parse(localStorage.getItem("alarms"));
     
 	updatetimer=[];
+	// chrome.alarms.clearAll();
 	alarmArray1.forEach((id)=>{
 	var countDownDate = (iddata.get(id)[5]).getTime();
 	var x = setInterval(function() {
@@ -384,6 +387,8 @@ function fetchAlarm(){
 	var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 	var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 	alarmArray1 = JSON.parse(localStorage.getItem("alarms"));
+	if(alarmArray1.find((e)=>{return e === id}) && distance > 60*1000)
+	 { createalarm(id);}
 	if(alarmArray1.find((e)=>{return e === id}))
 	 {document.getElementById(`update${id}`).innerHTML = days + "d " + hours + "h "+ minutes + "m " + seconds + "s ";}
 	else
@@ -392,10 +397,10 @@ function fetchAlarm(){
 	 }
 	if(distance === -99999999999)
 	 {  clearInterval(x); }
-	 
 	else if (distance < 0 ) {
-	  createalarm(id);
 	  clearInterval(x);
+	  chrome.alarms.clear(iddata.get(id)[1]);
+	  createnotification(id);
 	  document.getElementById(`update${id}`).innerHTML = "Started";
       alarmArray1 = alarmArray1.filter(function(value){ 
         return value != id;
@@ -411,8 +416,11 @@ function fetchAlarm(){
 
 
 function createalarm(id){
-	chrome.alarms.create(""+id, { when:Date.now()});
-	alert("Contest Remainder");
+	// chrome.alarms.getAll((e)=>{console.log(e)});
+	chrome.alarms.create(iddata.get(id)[1], { when:(new Date(iddata.get(id)[5]).getTime() - 60*1000)});
+}
+
+function createnotification(id){
 	chrome.notifications.create(""+id, {
 		type: 'basic',
 		iconUrl: `images/${logo.get(iddata.get(id)[4])}`,
@@ -430,7 +438,7 @@ function createalarm(id){
 		]
 	});
 }
-alert("Welcome Back");
+// alert("Welcome Back");
 
 chrome.notifications.onButtonClicked.addListener((id,button)=>{
          if(button===0)
@@ -438,4 +446,4 @@ chrome.notifications.onButtonClicked.addListener((id,button)=>{
 			window.open(`${iddata.get(parseInt(id))[1]}`);
 		 }
 })
-
+//   chrome.alarms.create("https://developer.chrome.com/docs/extensions/reference/", { when:new Date('Wed Jun 01 2022 12:36:05 GMT+0530 (India Standard Time)').getTime()});

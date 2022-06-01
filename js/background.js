@@ -1,5 +1,9 @@
 chrome.alarms.onAlarm.addListener(function(alarm) {
         console.log(alarm.name); 
+        chrome.tabs.create({
+                active: true,
+                url:  alarm.name
+              }, null);
  });
 
 chrome.notifications.onClicked.addListener(()=>{
