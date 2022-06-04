@@ -37,11 +37,6 @@ fil.addEventListener('change',()=>{
 
 // ------TOOGLE-------------
 
-window.addEventListener("load",function(){
-    setTimeout(()=>{document.querySelector(".loader").style.display="none"; 
-	document.querySelector(".mainDIV").classList.remove("hidden"); 
-   },3000);
-})
 
 btnAlarm.addEventListener('click',()=>{
     Home.classList.add("hidden");  
@@ -140,6 +135,8 @@ else { host = JSON.parse(localStorage.getItem('host-sites'));}
     {
         calendertable.innerHTML="<h2 style='text-align: center;'>App Crashed, Extension Failed In Fetching API.</h2>";
 		console.log("Api Fetching failed");
+		document.querySelector(".loader").style.display="none"; 
+		document.querySelector(".mainDIV").classList.remove("hidden"); 
 	}
 }
 
@@ -178,10 +175,14 @@ if (localStorage.getItem("contests") === null || localStorage.getItem("contests"
 			localStorage.setItem("contests", JSON.stringify(data));
 			localStorage.setItem("timeUpdate", new Date());
 			render();
+				document.querySelector(".loader").style.display="none"; 
+				document.querySelector(".mainDIV").classList.remove("hidden"); 
 		})
 } else {
 	apiData = JSON.parse(localStorage.getItem("contests"));
 	render();
+	document.querySelector(".loader").style.display="none"; 
+	document.querySelector(".mainDIV").classList.remove("hidden"); 
 }
 
 //----------------------------Render----------------------------------------
@@ -307,7 +308,17 @@ function fetch_idddata(){
 		if(conEvent.length>42)
 		conEvent = conEvent.substring(0,42)+"....";
 		iddata.set(contest.id,[conEvent,contest.href,`${date0}`,timeDuration,contest.resource,new Date(`${date} ${time[1]}`)]);
-	})
+	});
+	var tempArr = JSON.parse(localStorage.getItem("alarms"));
+	var tempArr1 = [];
+	tempArr.forEach((e)=>{
+		if(iddata.get(e) != undefined)
+		{
+			tempArr1.push(e);
+		}
+		// console.log(tempArr1);
+	localStorage.setItem("alarms",JSON.stringify(tempArr1));
+	});
 }
 
 var updatetimer=[];
@@ -446,4 +457,4 @@ chrome.notifications.onButtonClicked.addListener((id,button)=>{
 			window.open(`${iddata.get(parseInt(id))[1]}`);
 		 }
 })
-//   chrome.alarms.create("https://developer.chrome.com/docs/extensions/reference/", { when:new Date('Wed Jun 01 2022 12:36:05 GMT+0530 (India Standard Time)').getTime()});
+ // chrome.alarms.create("https://developer.chrome.com/docs/extensions/reference/", { when:new Date('Sat Jun 04 2022 12:24:58 GMT+0530 (India Standard Time)').getTime()});

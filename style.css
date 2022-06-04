@@ -84,6 +84,7 @@
 .MainCon #Home .optTool .btnOpt{
   /* background-color: aquamarine; */
   width: 80px;
+  height: 18px;
   font-size: 12px;
   font-weight: bold;
   padding: 5px;
