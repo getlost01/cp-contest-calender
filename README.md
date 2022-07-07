@@ -1,4 +1,4 @@
-# cp-contest-calender
+# cp-contest-calendar
 :tada: First of all, thanks for visit our extension
 [Cp-Contest-Calendar](https://chrome.google.com/webstore/detail/cp-contest-calendar/nchadgecfkcdikollfdhgobmjoeaiegd?hl=en&authuser=0)! :tada:<br>
 
