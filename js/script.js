@@ -1,3 +1,4 @@
+
 var btnAlarm = document.querySelector("#btnAlarm");
 var btnHome = document.querySelector("#btnHome");
 var btnSetting = document.querySelector("#btnSetting");
@@ -123,17 +124,19 @@ else { host = JSON.parse(localStorage.getItem('host-sites'));}
 
  //-------------------------------Clist API Fetching-------------------------------------
  
- const apiUrl=`https://mighty-temple-90200.herokuapp.com/https://clist.by:443/api/v2/contest//?username=gl01&api_key=9c07d2f4cd6b9148f529ccaa759ae1ad0e4dfc01&format=json&order_by=start`;
+ const apiUrl=`https://clist.by:443/api/v2/contest//?username=gl01&api_key=9c07d2f4cd6b9148f529ccaa759ae1ad0e4dfc01&format=json&order_by=start`;
  async function FetchAPI() {
 	try {
-		const response = await fetch(apiUrl + `&resource=${hosts}&end__gt=${curr_time_api_temp}&start__gt=${day15back_time_api_temp}`);
-        temp=(apiUrl + `&resource=${hosts}&end__gt=${curr_time_api_temp}&start__gt=${day15back_time_api_temp}`);
-		const data = await response.json();
-        console.log("Api Working Successfully");
-		return data;
+		const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl + `&resource=${hosts}&end__gt=${curr_time_api_temp}&start__gt=${day15back_time_api_temp}`)}`);
+		if (response.ok){
+			const data = (await response.json()).contents;
+			console.log("Api Working Successfully");
+			return JSON.parse(data);
+		}
+		throw new Error('Network response was not ok.')
 	} catch 
     {
-        calendertable.innerHTML="<h2 style='text-align: center;'>App Crashed, Extension Failed In Fetching API.</h2>";
+        calendertable.innerHTML=`<div class="emptyAlarm red-alert">Unable to find contests!<br>This may be due to a Fail API Connection or you may be offline.</div>`;
 		console.log("Api Fetching failed");
 		document.querySelector(".loader").style.display="none"; 
 		document.querySelector(".mainDIV").classList.remove("hidden"); 
@@ -212,7 +215,7 @@ function render() {
 				 <div class="details">
                   <img class="logo" src="images/${logo.get(contest.resource)}" alt="png">
                   <span>${conEvent}</span>
-                  <p>Started At: ${date} ${time[1]}</p>
+                  <p>Started At: <strong>${date} ${time[1]}</strong></p>
                   <p>Duration: ${timeDuration} </p>
 				  </div>
 				  </a>
@@ -241,7 +244,7 @@ function render() {
 				 <div class="details">
                   <img class="logo" src="images/${logo.get(contest.resource)}" alt="png">
                   <span>${conEvent}</span>
-                  <p>Started At: ${date} ${time[1]}</p>
+                  <p>Started At: <strong>${date} ${time[1]}</strong></p>
                   <p>Duration: ${timeDuration} </p>
 				  </div>
 				  </a>
@@ -275,7 +278,7 @@ function render() {
 		calendertable.innerHTML = `
 		<div class="emptyAlarm">
 		Empty Section.<br>
-		Not a single contest found.
+		Upcoming contest details not found!
 		</div>
 	`
 	}
@@ -357,13 +360,13 @@ function fetchAlarm(){
 		  <div class="details">
 		   <img class="logo" src="images/${logo.get(iddata.get(id)[4])}" alt="png">
 		   <span>${iddata.get(id)[0]}</span>
-		   <p>Started At: ${iddata.get(id)[2]}</p>
+		   <p>Started At: <strong>${iddata.get(id)[2]}</strong></p>
 		   <p>Duration: ${iddata.get(id)[3]} </p>
 		   <p> Time Left: <span class="update" id="update${id}"> </span>
 		   </div>
 		   </a>
 		   <div class="delete">
-			 <i class="fa-solid fa-delete-left" id="del${id}"></i> 
+			 <i class="fa-regular fa-circle-xmark" id="del${id}"></i> 
 			</div>
 		 </div>
 		 `
@@ -451,11 +454,11 @@ function createnotification(id){
 }
 // alert("Welcome Back");
 
-chrome.notifications.onButtonClicked.addListener((id,button)=>{
-         if(button===0)
-		 {
-			window.open(`${iddata.get(parseInt(id))[1]}`);
-		 }
-})
+// chrome.notifications.onButtonClicked.addListener((id,button)=>{
+//          if(button===0)
+// 		 {
+// 			window.open(`${iddata.get(parseInt(id))[1]}`);
+// 		 }
+// })
 
  // chrome.alarms.create("https://developer.chrome.com/docs/extensions/reference/", { when:new Date('Sat Jun 04 2022 12:24:58 GMT+0530 (India Standard Time)').getTime()});

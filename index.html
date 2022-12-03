@@ -14,12 +14,6 @@
 </head>
 <body>
 
-  <div class="social">
-    <a href="https://github.com/getlost01/site-saver" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i></a>
-    <a href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=creator.gl01@gmail.com" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-envelope-open"></i></a>
-    <a href="https://www.linkedin.com/in/aagam-jain-gl01/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i></a>
-  </div> 
-
   <div class="loader">
     <h1>
     <span class="let1">l</span>  
@@ -34,24 +28,24 @@
  
 
 <div class="mainDIV hidden"> 
-    <h3>Contests Calendar</h3>
+    <!-- <h3>Contests Calendar</h3> -->
     <div class="lastoption hidden"></div>
     <div class="Options">
         <div class="btnOpt" id="btnAlarm">
-             <i class="fa-solid fa-bell"></i>  Notify me 
+            Notify me 
         </div>
         <div class="btnOpt okactive" id="btnHome">
-            <i class="fa-solid fa-calendar"></i>  Home
+             Home
         </div>
         <div class="btnOpt" id="btnSetting">
-           <i class="fa-solid fa-sliders"></i>  Platforms
+            Platforms
         </div>
     </div>
 
     <div class="MainCon">
 
       <div class="equaldiv hidden" id="Alarm">
-            <h4>Contest Starts In</h4>
+            <h4>Important Contests</h4>
             <div class="alarmCon">
                
             </div>
@@ -68,12 +62,10 @@
                 <i class="fa-solid fa-calendar-week"></i> Upcoming
               </div>
               <div class="fil">
-                <label for="Filter">Filter</label>
-                <br>
                   <select name="Filter" id="filter">
-                    <option value="dur3">Duration (&lt= 3hrs)</option>
-                    <option value="dur24" selected>Duration (&lt= 1day)</option>
-                    <option value="durg24">Duration (&gt= 1day)</option>
+                    <option value="dur3">Duration upto 3hrs </option>
+                    <option value="dur24" selected>Duration upto 1day</option>
+                    <option value="durg24">All Contests</option>
                   </select>
               </div>
             </div>
@@ -172,6 +164,14 @@
 
     </div>
   </div>
+
+  <div class="contact">
+    <p>For all inquiries, please email 
+      <a href="https://mail.google.com/mail/u/0/?fs=1&amp;tf=cm&amp;to=creator.gl01@gmail.com" target="_blank">here</a>
+    </p>
+    <p>Version <a href="https://github.com/getlost01/cp-contest-calender" target="_blank">1.0.1.5</a></p>
+  </div>
+
    <script src="js/script.js"></script>
    <!-- <script src="js/custom.js"></script> -->
 </body>
