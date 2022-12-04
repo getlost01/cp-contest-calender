@@ -1,5 +1,5 @@
 # cp-contest-calendar
-:tada: First of all, thanks for visit our extension
+:tada: First of all, thanks for visit our extension.
 [Cp-Contest-Calendar](https://chrome.google.com/webstore/detail/cp-contest-calendar/nchadgecfkcdikollfdhgobmjoeaiegd?hl=en&authuser=0)! :tada:<br>
 
 > This extension is appreciable for programmers who do Competitive Programming. This extension can find out upcoming CP contest details of different platforms.
