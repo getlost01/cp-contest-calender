@@ -431,7 +431,7 @@ function fetchAlarm(){
 
 function createalarm(id){
 	// chrome.alarms.getAll((e)=>{console.log(e)});
-	chrome.alarms.create(iddata.get(id)[1], { when:(new Date(iddata.get(id)[5]).getTime() - 60*1000)});
+	chrome.alarms.create(iddata.get(id)[1], { when:(new Date(iddata.get(id)[5]).getTime() - 2*60*1000)});
 }
 
 function createnotification(id){
@@ -454,11 +454,11 @@ function createnotification(id){
 }
 // alert("Welcome Back");
 
-// chrome.notifications.onButtonClicked.addListener((id,button)=>{
-//          if(button===0)
-// 		 {
-// 			window.open(`${iddata.get(parseInt(id))[1]}`);
-// 		 }
-// })
+chrome.notifications.onButtonClicked.addListener((id,button)=>{
+         if(button===0)
+		 {
+			window.open(`${iddata.get(parseInt(id))[1]}`);
+		 }
+})
 
- // chrome.alarms.create("https://developer.chrome.com/docs/extensions/reference/", { when:new Date('Sat Jun 04 2022 12:24:58 GMT+0530 (India Standard Time)').getTime()});
+//  chrome.alarms.create("https://developer.chrome.com/docs/extensions/reference/", { when:new Date('Sun Dec 04 2022 08:43:31 GMT+0530 (India Standard Time)').getTime()});
