@@ -124,10 +124,10 @@ else { host = JSON.parse(localStorage.getItem('host-sites'));}
 
  //-------------------------------Clist API Fetching-------------------------------------
  
- const apiUrl=`https://clist.by:443/api/v2/contest//?username=gl01&api_key=9c07d2f4cd6b9148f529ccaa759ae1ad0e4dfc01&format=json&order_by=start`;
+ const apiUrl=``;
  async function FetchAPI() {
 	try {
-		const response = await fetch(`https://cors-anywhere-yoeu.onrender.com/${(apiUrl + `&resource=${hosts}&end__gt=${curr_time_api_temp}&start__gt=${day15back_time_api_temp}`)}`);
+		const response = await fetch(`${(apiUrl + `&resource=${hosts}&end__gt=${curr_time_api_temp}&start__gt=${day15back_time_api_temp}`)}`);
 		if (response.ok){
 			const data = (await response.json());
 			console.log(data);
