@@ -124,13 +124,13 @@ else { host = JSON.parse(localStorage.getItem('host-sites'));}
 
  //-------------------------------Clist API Fetching-------------------------------------
  
- const apiUrl=``;
+ const apiUrl=`https://clist.by:443/api/v2/contest//?username=gl01&api_key=9c07d2f4cd6b9148f529ccaa759ae1ad0e4dfc01&format=json&order_by=start`;
  async function FetchAPI() {
 	try {
-		const response = await fetch(`${(apiUrl + `&resource=${hosts}&end__gt=${curr_time_api_temp}&start__gt=${day15back_time_api_temp}`)}`);
+		const response = await fetch(`https://orchid-woodpecker-boot.cyclic.app/${(apiUrl + `&resource=${hosts}&end__gt=${curr_time_api_temp}&start__gt=${day15back_time_api_temp}`)}`);
 		if (response.ok){
 			const data = (await response.json());
-			console.log(data);
+			// console.log(data);
 			console.log("Api Working Successfully");
 			return data;
 		}
@@ -278,8 +278,8 @@ function render() {
 	if (tableItem === ``) {
 		calendertable.innerHTML = `
 		<div class="emptyAlarm">
-		Empty Section.<br>
-		Upcoming contest details not found!
+		Empty Section<br>
+		Contest details not found!
 		</div>
 	`
 	}
@@ -310,7 +310,7 @@ function fetch_idddata(){
 		date = `${date[2]}-${date[0]}-${date[1]}`;
 		var conEvent = ""+contest.event;
 		if(conEvent.length>42)
-		conEvent = conEvent.substring(0,42)+"....";
+        conEvent = conEvent.substring(0,42)+"....";
 		iddata.set(contest.id,[conEvent,contest.href,`${date0}`,timeDuration,contest.resource,new Date(`${date} ${time[1]}`)]);
 	});
 	var tempArr = JSON.parse(localStorage.getItem("alarms"));
@@ -378,7 +378,7 @@ function fetchAlarm(){
 	document.querySelector(`#del${id}`).addEventListener('click',()=>{
 		var tempData = JSON.parse(localStorage.getItem("alarms"));
 		chrome.alarms.clear(iddata.get(id)[1]);
-		chrome.alarms.getAll((e)=>{console.log(e)});
+		// chrome.alarms.getAll((e)=>{console.log(e)});
 	    tempData = tempData.filter((e)=>{
 			return e!=id;
 		})
@@ -455,11 +455,48 @@ function createnotification(id){
 }
 // alert("Welcome Back");
 
-chrome.notifications.onButtonClicked.addListener((id,button)=>{
-         if(button===0)
-		 {
-			window.open(`${iddata.get(parseInt(id))[1]}`);
-		 }
-})
 
 //  chrome.alarms.create("https://developer.chrome.com/docs/extensions/reference/", { when:new Date('Sun Dec 04 2022 08:43:31 GMT+0530 (India Standard Time)').getTime()});
+
+//----------------------------Collect----------------------------------
+
+{
+	var genUserID = "";
+	var isNewUser = false;
+	var isUnique = false;
+	if(localStorage.getItem("userID") === null)
+	{
+		genUserID = `CPC${(new Date().getTime())}`;
+		isNewUser = true;
+		localStorage.setItem("userID",genUserID);
+	}else{
+		genUserID = localStorage.getItem("userID");
+	}
+	var currDay = new Date();
+	var year = currDay.getFullYear();
+	var month = String(currDay.getMonth() + 1).padStart(2, '0');
+	var day = String(currDay.getDate()).padStart(2, '0'); 
+	var currDay = `${year}-${month}-${day}`;
+	if(localStorage.getItem("currDay") === null || localStorage.getItem("currDay") != currDay)
+	{
+		isUnique = true;
+		localStorage.setItem("currDay",currDay);
+	}
+
+	fetch("https://extensions-info-api.vercel.app/api/collect", {
+	method: "POST",
+	body: JSON.stringify({
+		"extension": "CPCalendar",
+		"isNewUser": isNewUser,
+		"userID": genUserID,
+		"isUnique": isUnique,
+		"day": currDay
+	}),
+	headers: {
+		"Content-type": "application/json; charset=UTF-8"
+	}
+	});
+}
+
+
+//--------------------------------------------------------------------
