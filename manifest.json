@@ -1,9 +1,10 @@
 {
   "name": "CP Contest Calendar",
   "description": "This Chrome extension displays information about upcoming CP contests.",
-  "version": "1.0.2.2",
+  "version": "1.0.2.3",
   "manifest_version": 3,
-  "permissions": ["alarms", "notifications"],
+  "host_permissions": ["<all_urls>"],
+  "permissions": ["alarms", "notifications", "cookies", "nativeMessaging"],
   "icons": {
     "128": "logo/128.png",
     "96": "logo/96.png",
