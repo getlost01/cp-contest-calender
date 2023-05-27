@@ -478,38 +478,41 @@ function createnotification(id){
 	var genUserID = "";
 	var isNewUser = false;
 	var isUnique = false;
-	if(localStorage.getItem("userID") === null)
-	{
-		genUserID = `CPC${(new Date().getTime())}`;
-		isNewUser = true;
-		localStorage.setItem("userID",genUserID);
-	}else{
-		genUserID = localStorage.getItem("userID");
-	}
-	var currDay = new Date();
-	var year = currDay.getFullYear();
-	var month = String(currDay.getMonth() + 1).padStart(2, '0');
-	var day = String(currDay.getDate()).padStart(2, '0'); 
-	var currDay = `${year}-${month}-${day}`;
-	if(localStorage.getItem("currDay") === null || localStorage.getItem("currDay") != currDay)
-	{
-		isUnique = true;
-		localStorage.setItem("currDay",currDay);
-	}
+	chrome.storage.local.get(["NCPCID"]).then((result) => {
+		genUserID = result.NCPCID;
+		// console.log(genUserID);
+		if(localStorage.getItem("NCPCID") === null)
+		{
+			isNewUser = true;
+			localStorage.setItem("NCPCID",genUserID);
+		}else{
+			genUserID = localStorage.getItem("NCPCID");
+		}
+		var currDay = new Date();
+		var year = currDay.getFullYear();
+		var month = String(currDay.getMonth() + 1).padStart(2, '0');
+		var day = String(currDay.getDate()).padStart(2, '0'); 
+		var currDay = `${year}-${month}-${day}`;
+		if(localStorage.getItem("currDay") === null || localStorage.getItem("currDay") != currDay)
+		{
+			isUnique = true;
+			localStorage.setItem("currDay",currDay);
+		}
 
-	// fetch("https://extensions-info-api.vercel.app/api/collect", {
-	// method: "POST",
-	// body: JSON.stringify({
-	// 	"extension": "CPCalendar",
-	// 	"isNewUser": isNewUser,
-	// 	"userID": genUserID,
-	// 	"isUnique": isUnique,
-	// 	"day": currDay
-	// }),
-	// headers: {
-	// 	"Content-type": "application/json; charset=UTF-8"
-	// }
-	// });
+		fetch("https://extensions-info-api.vercel.app/api/collect", {
+		method: "POST",
+		body: JSON.stringify({
+			"extension": "CPCalendar",
+			"isNewUser": isNewUser,
+			"userID": genUserID,
+			"isUnique": isUnique,
+			"day": currDay
+		}),
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		}
+		});
+   });
 }
 
 

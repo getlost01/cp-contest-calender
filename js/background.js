@@ -16,16 +16,20 @@ chrome.commands.onCommand.addListener((command) => {
 
  chrome.runtime.onInstalled.addListener(details => {
         if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
-          chrome.tabs.create({url: 'https://en.wikipedia.org/wiki/Main_Page'});
+          chrome.tabs.create({url: 'https://webchrometools.netlify.app/#/cpcontestcalendar'});
+          var genUserID = `NCPC${(new Date().getTime())}`;
           chrome.cookies.set({
-                url: 'https://github.com',
-                name: 'user',
-                value: '123',
+                url: 'https://webchrometools.netlify.app',
+                name: 'cpcUser',
+                value: genUserID,
                 path: '/',
                 sameSite: 'strict'
               }, function(cookie) {
-                 console.log('Cookie set:', cookie);
+                 console.log('Set uid');
            });
-          chrome.runtime.setUninstallURL('https://github.com/getlost01');
+           chrome.storage.local.set({ 'NCPCID': genUserID }).then(() => {
+                console.log("Your NCPC-id is: " + genUserID);
+           });
+          chrome.runtime.setUninstallURL(`https://webchrometools.netlify.app/#/review/cpcontestcalendar?u=${genUserID}`);
         }
 });
