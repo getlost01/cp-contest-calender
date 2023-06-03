@@ -271,7 +271,15 @@ width: 450px;
 .MainCon #Home .tableCon .tableitem .alarm i:active, .MainCon #Alarm .alarmCon .tableitem i:active{
   transform: scale(0.95);
 }
-
+.MainCon #Alarm .alarmCon .tableitem .fa-circle-xmark{
+  background-color: red;
+  color: white;
+}
+.MainCon #Home .tableCon .tableitem .alarm .fa-check{
+  background-color: green;
+  border: none;
+  color: white;
+}
 /* ------------setting section----------- */
 .MainCon #Setting  h4, .MainCon #Alarm h4{
  margin: 0;

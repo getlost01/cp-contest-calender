@@ -22,7 +22,10 @@
   * Leetcode.com
   * Topcoder.com
   * Atcoder.jp
-  * Google
+  * Coding Ninjas
+  * Google 
+  
+Note: After 1.0.2.3 version google contests is not supported on our platform.
 
 
 * This extension allows users to choose any platform out of these eight to show upcoming contest details.

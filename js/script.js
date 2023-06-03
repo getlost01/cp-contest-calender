@@ -11,8 +11,8 @@ var todaybtn = document.querySelector("#today");
 var upcomingbtn = document.querySelector("#upcoming");
 var fil = document.querySelector("#filter");
 
-var host_sites=['codeforces.com','codechef.com','atcoder.jp','leetcode.com','codingcompetitions.withgoogle.com','hackerearth.com','geeksforgeeks.org','topcoder.com'];
-var hosts = `codechef.com%2Ccodeforces.com%2Cgeeksforgeeks.org%2Chackerearth.com%2Cleetcode.com%2Ctopcoder.com%2Catcoder.jp%2Ccodingcompetitions.withgoogle.com`;
+var host_sites=['codeforces.com','codechef.com','atcoder.jp','leetcode.com','codingninjas.com/codestudio','hackerearth.com','geeksforgeeks.org','topcoder.com'];
+var hosts = `codechef.com%2Ccodeforces.com%2Cgeeksforgeeks.org%2Chackerearth.com%2Cleetcode.com%2Ctopcoder.com%2Catcoder.jp%2Ccodingninjas.com/codestudio`;
 var today = false;
 const iddata = new Map();
 var apiData;
@@ -92,7 +92,7 @@ logo.set('codechef.com', 'codechef.png');
 logo.set('codeforces.com', 'codeforces.png');
 logo.set('hackerearth.com', 'HackerEarth.png');
 logo.set('geeksforgeeks.org', 'GeeksforGeeks.png');
-logo.set('codingcompetitions.withgoogle.com', 'google.png'); 
+logo.set('codingninjas.com/codestudio', 'codingNinja.png'); 
 
 //-------------------------------------------------------
 
@@ -124,10 +124,10 @@ else { host = JSON.parse(localStorage.getItem('host-sites'));}
 
  //-------------------------------Clist API Fetching-------------------------------------
  
- const apiUrl=`https://clist.by:443/api/v2/contest//?username=gl01&api_key=9c07d2f4cd6b9148f529ccaa759ae1ad0e4dfc01&format=json&order_by=start`;
+ const apiUrl=`https://cp-calendar-server.vercel.app/upcomingContests/?`;
  async function FetchAPI() {
 	try {
-		const response = await fetch(`https://orchid-woodpecker-boot.cyclic.app/${(apiUrl + `&resource=${hosts}&end__gt=${curr_time_api_temp}&start__gt=${day15back_time_api_temp}`)}`);
+		const response = await fetch(`${(apiUrl + `&resource=${hosts}&end__gt=${curr_time_api_temp}&start__gt=${day15back_time_api_temp}`)}`);
 		if (response.ok){
 			const data = (await response.json());
 			// console.log(data);
@@ -196,6 +196,7 @@ var alarm_id=[];
 function render() {
 	var tableItem = ``;
 	alarm_id=[];
+	var alreadySetAlarm = JSON.parse(localStorage.getItem('alarms'));
 	apiData.objects.forEach(function (contest) {
 		var start_time = new Date(contest.start + `.000Z`);
 		var end_time = new Date(contest.end  + `.000Z`);
@@ -220,11 +221,16 @@ function render() {
                   <p>Duration: ${timeDuration} </p>
 				  </div>
 				  </a>
-				   <div class="alarm">
-				    <i class="fa-solid fa-bell" id="id${contest.id}"></i> 
-				  </div>
+					<div class="alarm">
+						${(alreadySetAlarm.includes(contest.id))?
+						`<i class="fa-solid fa-check"></i>`
+						:
+						`<i class="fa-solid fa-bell" id="id${contest.id}"></i>`
+						}
+					</div>
                 </div>
 				`;
+				if(!alreadySetAlarm.includes(contest.id))
 				alarm_id.push(contest.id);
 				tableItem += temp;
 			}
@@ -249,11 +255,16 @@ function render() {
                   <p>Duration: ${timeDuration} </p>
 				  </div>
 				  </a>
-				   <div class="alarm">
-				    <i class="fa-solid fa-bell" id="id${contest.id}"></i> 
+				  <div class="alarm">
+					${(alreadySetAlarm.includes(contest.id))?
+					`<i class="fa-solid fa-check"></i>`
+					:
+					`<i class="fa-solid fa-bell" id="id${contest.id}"></i>`
+					}
 				  </div>
                 </div>
 				`;
+				if(!alreadySetAlarm.includes(contest.id))
 				alarm_id.push(contest.id);
 				tableItem += temp;
 			}
@@ -272,6 +283,7 @@ function render() {
 			  alarmArray.push(id);
 			localStorage.setItem('alarms',JSON.stringify(alarmArray));
 			fetchAlarm();
+			render();
 		})
 	})
 	fetchAlarm();
@@ -385,6 +397,7 @@ function fetchAlarm(){
 		alarmArray1 = tempData;
 		localStorage.setItem("alarms",JSON.stringify(tempData));
 		fetchAlarm();
+		render();
 	});
     })
 
@@ -394,6 +407,8 @@ function fetchAlarm(){
 	// chrome.alarms.clearAll();
 	alarmArray1.forEach((id)=>{
 	var countDownDate = (iddata.get(id)[5]).getTime();
+	if(alarmArray1.find((e)=>{return e === id}) && (iddata.get(id)[5]).getTime()-2*60*1000 > (new Date()).getTime())
+	{ createalarm(id);}
 	var x = setInterval(function() {
 	var now = new Date().getTime();
 	var distance = countDownDate - now;
@@ -402,8 +417,6 @@ function fetchAlarm(){
 	var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 	var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 	alarmArray1 = JSON.parse(localStorage.getItem("alarms"));
-	if(alarmArray1.find((e)=>{return e === id}) && distance > 60*1000)
-	 { createalarm(id);}
 	if(alarmArray1.find((e)=>{return e === id}))
 	 {document.getElementById(`update${id}`).innerHTML = days + "d " + hours + "h "+ minutes + "m " + seconds + "s ";}
 	else
@@ -422,6 +435,7 @@ function fetchAlarm(){
        });
 	   localStorage.setItem("alarms",JSON.stringify(alarmArray1));
 	   fetchAlarm();
+	   render();
 	}
 	}, 1000);
     })
@@ -433,6 +447,7 @@ function fetchAlarm(){
 function createalarm(id){
 	// chrome.alarms.getAll((e)=>{console.log(e)});
 	chrome.alarms.create(iddata.get(id)[1], { when:(new Date(iddata.get(id)[5]).getTime() - 2*60*1000)});
+	// console.log(new Date((iddata.get(id)[5]).getTime() - 2*60*1000));
 }
 
 function createnotification(id){
@@ -464,38 +479,41 @@ function createnotification(id){
 	var genUserID = "";
 	var isNewUser = false;
 	var isUnique = false;
-	if(localStorage.getItem("userID") === null)
-	{
-		genUserID = `CPC${(new Date().getTime())}`;
-		isNewUser = true;
-		localStorage.setItem("userID",genUserID);
-	}else{
-		genUserID = localStorage.getItem("userID");
-	}
-	var currDay = new Date();
-	var year = currDay.getFullYear();
-	var month = String(currDay.getMonth() + 1).padStart(2, '0');
-	var day = String(currDay.getDate()).padStart(2, '0'); 
-	var currDay = `${year}-${month}-${day}`;
-	if(localStorage.getItem("currDay") === null || localStorage.getItem("currDay") != currDay)
-	{
-		isUnique = true;
-		localStorage.setItem("currDay",currDay);
-	}
+	chrome.storage.local.get(["NCPCID"]).then((result) => {
+		genUserID = result.NCPCID;
+		// console.log(genUserID);
+		if(localStorage.getItem("NCPCID") === null)
+		{
+			isNewUser = true;
+			localStorage.setItem("NCPCID",genUserID);
+		}else{
+			genUserID = localStorage.getItem("NCPCID");
+		}
+		var currDay = new Date();
+		var year = currDay.getFullYear();
+		var month = String(currDay.getMonth() + 1).padStart(2, '0');
+		var day = String(currDay.getDate()).padStart(2, '0'); 
+		var currDay = `${year}-${month}-${day}`;
+		if(localStorage.getItem("currDay") === null || localStorage.getItem("currDay") != currDay)
+		{
+			isUnique = true;
+			localStorage.setItem("currDay",currDay);
+		}
 
-	fetch("https://extensions-info-api.vercel.app/api/collect", {
-	method: "POST",
-	body: JSON.stringify({
-		"extension": "CPCalendar",
-		"isNewUser": isNewUser,
-		"userID": genUserID,
-		"isUnique": isUnique,
-		"day": currDay
-	}),
-	headers: {
-		"Content-type": "application/json; charset=UTF-8"
-	}
-	});
+		fetch("https://extensions-info-api.vercel.app/api/collect", {
+		method: "POST",
+		body: JSON.stringify({
+			"extension": "CPCalendar",
+			"isNewUser": isNewUser,
+			"userID": genUserID,
+			"isUnique": isUnique,
+			"day": currDay
+		}),
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		}
+		});
+   });
 }
 
 
