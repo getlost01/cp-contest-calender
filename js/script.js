@@ -407,6 +407,8 @@ function fetchAlarm(){
 	// chrome.alarms.clearAll();
 	alarmArray1.forEach((id)=>{
 	var countDownDate = (iddata.get(id)[5]).getTime();
+	if(alarmArray1.find((e)=>{return e === id}) && (iddata.get(id)[5]).getTime()-2*60*1000 > (new Date()).getTime())
+	{ createalarm(id);}
 	var x = setInterval(function() {
 	var now = new Date().getTime();
 	var distance = countDownDate - now;
@@ -415,8 +417,6 @@ function fetchAlarm(){
 	var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 	var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 	alarmArray1 = JSON.parse(localStorage.getItem("alarms"));
-	if(alarmArray1.find((e)=>{return e === id}) && distance > 60*1000)
-	 { createalarm(id);}
 	if(alarmArray1.find((e)=>{return e === id}))
 	 {document.getElementById(`update${id}`).innerHTML = days + "d " + hours + "h "+ minutes + "m " + seconds + "s ";}
 	else
@@ -447,6 +447,7 @@ function fetchAlarm(){
 function createalarm(id){
 	// chrome.alarms.getAll((e)=>{console.log(e)});
 	chrome.alarms.create(iddata.get(id)[1], { when:(new Date(iddata.get(id)[5]).getTime() - 2*60*1000)});
+	// console.log(new Date((iddata.get(id)[5]).getTime() - 2*60*1000));
 }
 
 function createnotification(id){

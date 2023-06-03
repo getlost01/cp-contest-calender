@@ -4,7 +4,7 @@
   "version": "1.0.2.4",
   "manifest_version": 3,
   "host_permissions": ["<all_urls>"],
-  "permissions": ["alarms", "notifications", "cookies", "nativeMessaging", "storage"],
+  "permissions": ["alarms", "notifications", "cookies", "storage"],
   "icons": {
     "128": "logo/128.png",
     "96": "logo/96.png",
